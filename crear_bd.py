@@ -1,7 +1,14 @@
 # Crea la base de datos "juegos" y la tabla "juegos" (se ejecuta UNA sola vez)
-import pymysql
+import os
 
-conexion = pymysql.connect(host='localhost', user='root', password='root')
+import pymysql
+from dotenv import load_dotenv
+
+load_dotenv()
+
+conexion = pymysql.connect(host=os.environ.get('DB_HOST', 'localhost'),
+                           user=os.environ['DB_USER'],
+                           password=os.environ['DB_PASSWORD'])
 with conexion.cursor() as cursor:
     cursor.execute("CREATE DATABASE IF NOT EXISTS juegos")
     cursor.execute("USE juegos")
